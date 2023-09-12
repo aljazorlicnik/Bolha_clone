@@ -18,12 +18,8 @@ CREATE TABLE `Uporabniki`
   `geslo` Varchar(250) NOT NULL,
   `admin` Bool NOT NULL DEFAULT 0,
   `telefon` Varchar(20),
-  `kraj_id` Int,
   PRIMARY KEY (`id`)
 )
-;
-
-CREATE INDEX `IX_Relationship2` ON `Uporabniki` (`kraj_id`)
 ;
 
 -- Table Kraji
@@ -62,6 +58,7 @@ CREATE TABLE `Oglasi`
   `opis` Text,
   `uporabnik_id` Int,
   `kategorija_id` Int,
+  `kraj_id` Int,
   PRIMARY KEY (`id`)
 )
 ;
@@ -70,6 +67,9 @@ CREATE INDEX `IX_Relationship3` ON `Oglasi` (`uporabnik_id`)
 ;
 
 CREATE INDEX `IX_Relationship6` ON `Oglasi` (`kategorija_id`)
+;
+
+CREATE INDEX `IX_Relationship11` ON `Oglasi` (`kraj_id`)
 ;
 
 -- Table Slike
@@ -123,9 +123,6 @@ CREATE INDEX `IX_Relationship9` ON `Sporocila` (`oglas_id`)
 ALTER TABLE `Kraji` ADD CONSTRAINT `Relationship1` FOREIGN KEY (`drzava_id`) REFERENCES `Drzave` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
-ALTER TABLE `Uporabniki` ADD CONSTRAINT `Relationship2` FOREIGN KEY (`kraj_id`) REFERENCES `Kraji` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-;
-
 ALTER TABLE `Oglasi` ADD CONSTRAINT `Relationship3` FOREIGN KEY (`uporabnik_id`) REFERENCES `Uporabniki` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
@@ -142,6 +139,9 @@ ALTER TABLE `Sporocila` ADD CONSTRAINT `Relationship9` FOREIGN KEY (`oglas_id`) 
 ;
 
 ALTER TABLE `Slike` ADD CONSTRAINT `Relationship10` FOREIGN KEY (`oglas_id`) REFERENCES `Oglasi` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `Oglasi` ADD CONSTRAINT `Relationship11` FOREIGN KEY (`kraj_id`) REFERENCES `Kraji` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
 

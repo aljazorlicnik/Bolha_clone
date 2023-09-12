@@ -1,6 +1,6 @@
 /*
 Created: 11/09/2023
-Modified: 11/09/2023
+Modified: 12/09/2023
 Model: MySQL 8.0
 Database: MySQL 8.0
 */
@@ -61,16 +61,12 @@ CREATE TABLE `Oglasi`
   `naslov` Varchar(250) NOT NULL,
   `opis` Text,
   `uporabnik_id` Int,
-  `slika_id` Int,
   `kategorija_id` Int,
   PRIMARY KEY (`id`)
 )
 ;
 
 CREATE INDEX `IX_Relationship3` ON `Oglasi` (`uporabnik_id`)
-;
-
-CREATE INDEX `IX_Relationship4` ON `Oglasi` (`slika_id`)
 ;
 
 CREATE INDEX `IX_Relationship6` ON `Oglasi` (`kategorija_id`)
@@ -82,8 +78,12 @@ CREATE TABLE `Slike`
 (
   `id` Int NOT NULL AUTO_INCREMENT,
   `slika` Varchar(250) NOT NULL,
+  `oglas_id` Int,
   PRIMARY KEY (`id`)
 )
+;
+
+CREATE INDEX `IX_Relationship10` ON `Slike` (`oglas_id`)
 ;
 
 -- Table Kategorije
@@ -94,6 +94,28 @@ CREATE TABLE `Kategorije`
   `kategorija` Varchar(250) NOT NULL,
   PRIMARY KEY (`id`)
 )
+;
+
+-- Table Sporocila
+
+CREATE TABLE `Sporocila`
+(
+  `id` Int NOT NULL AUTO_INCREMENT,
+  `sporocilo` Text NOT NULL,
+  `sender_id` Int,
+  `receiver_id` Int,
+  `oglas_id` Int,
+  PRIMARY KEY (`id`)
+)
+;
+
+CREATE INDEX `IX_Relationship7` ON `Sporocila` (`sender_id`)
+;
+
+CREATE INDEX `IX_Relationship8` ON `Sporocila` (`receiver_id`)
+;
+
+CREATE INDEX `IX_Relationship9` ON `Sporocila` (`oglas_id`)
 ;
 
 -- Create foreign keys (relationships) section -------------------------------------------------
@@ -107,10 +129,19 @@ ALTER TABLE `Uporabniki` ADD CONSTRAINT `Relationship2` FOREIGN KEY (`kraj_id`) 
 ALTER TABLE `Oglasi` ADD CONSTRAINT `Relationship3` FOREIGN KEY (`uporabnik_id`) REFERENCES `Uporabniki` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
-ALTER TABLE `Oglasi` ADD CONSTRAINT `Relationship4` FOREIGN KEY (`slika_id`) REFERENCES `Slike` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+ALTER TABLE `Oglasi` ADD CONSTRAINT `Relationship6` FOREIGN KEY (`kategorija_id`) REFERENCES `Kategorije` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
-ALTER TABLE `Oglasi` ADD CONSTRAINT `Relationship6` FOREIGN KEY (`kategorija_id`) REFERENCES `Kategorije` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+ALTER TABLE `Sporocila` ADD CONSTRAINT `Relationship7` FOREIGN KEY (`sender_id`) REFERENCES `Uporabniki` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `Sporocila` ADD CONSTRAINT `Relationship8` FOREIGN KEY (`receiver_id`) REFERENCES `Uporabniki` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `Sporocila` ADD CONSTRAINT `Relationship9` FOREIGN KEY (`oglas_id`) REFERENCES `Oglasi` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+;
+
+ALTER TABLE `Slike` ADD CONSTRAINT `Relationship10` FOREIGN KEY (`oglas_id`) REFERENCES `Oglasi` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ;
 
 

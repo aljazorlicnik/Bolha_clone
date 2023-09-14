@@ -20,6 +20,7 @@ else{
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Domov - Muha</title>
     <link rel="stylesheet" href="./styles/style_index.css">
 </head>
@@ -31,10 +32,7 @@ else{
             <a href="oglasi.php">Moji oglasi</a>
             <div class="profil">
                 <a href="profil.php?id=<?php echo $id; ?>"><?php echo $ime . " " . $priimek; ?></a>
-                        <a href="odjava.php"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-  <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-</svg></a>
+                <a class="odjava" href="odjava.php">Odjava</a>
             </div>
         </div>
     </nav>
@@ -43,6 +41,23 @@ else{
                     <input type="text" name="iskanje" placeholder="Išči po oglasih">
                     <button class="btn" type="submit">Išči</button>
         </form>
+    </div>
+    <div class="content">
+        <p class="k-naslov">Kategorije:</p><br>
+        <div class="kategorije">
+            <!-- select kategorije and display them in divs -->
+            <?php
+            $sql = "SELECT * FROM kategorije";
+            $result = mysqli_query($link, $sql);
+            while($row = mysqli_fetch_assoc($result)){
+                $id_kategorije = $row['id'];
+                $ime_kategorije = $row['kategorija'];
+                echo "<div class='kategorija'>";
+                echo "<a href='kategorija.php?id=$id_kategorije'><div>$ime_kategorije</div></a>";
+                echo "</div>";
+            }
+            ?>
+        </div>
     </div>
 </body>
 </html>

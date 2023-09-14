@@ -31,7 +31,7 @@
                 <button class="btn" type="submit">Registriraj se</button>
             </div>
             <div class="input">
-            <a class="prijava" href="prijava.html">Ste že registrirani? Prijavite se.</a>
+            <a class="prijava" href="prijava.php">Ste že registrirani? Prijavite se.</a>
             </div>
         </form>
     </div>

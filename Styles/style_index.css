@@ -1,4 +1,12 @@
 /* style nav */
+body{
+    background-color: #8800ff;
+}
+
+*{
+    font-family: sans-serif;
+}
+
 .nav {
     background-color: #8800ff;
     border-color: #d000ff;
@@ -24,7 +32,6 @@
     color: #fff;
     text-decoration: none;
     font-size: 20px;
-    font-family: 'Roboto', sans-serif;
     font-weight: bold;
     margin-left: 20px;
     margin-right: 20px;
@@ -32,23 +39,74 @@
 }
 
 .search input{
-    width: 90%;
+    width: 85%;
     margin-top: 10px;
-    padding: 5px;
+    margin-left: 20px;
+    padding: 10px;
     border-radius: 3px;
     border: 1px solid #8800ff;
 }
 
 .search .btn{
     margin-left: 5px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 3px;
     border: 1px solid #8800ff;
-    background-color: #8800ff;
-    color: #fff;
+    background-color: #ffffff;
+    color: #8800ff;
     width: 8%;
+}
+
+.search .btn:hover{
+    background-color: #ce96ff;
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .profil{
     margin-left: 55%;
+    margin-top: 10px;
+}
+
+.odjava{
+    background-color: rgb(252, 102, 102);
+    border-radius: 5px;
+    border: 1px solid red;
+    scale: 0.75;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.content{
+    width: 100%;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #8800ff;
+    margin-top: 25px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.kategorije{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 3px;
+}
+
+.kategorije a{
+    color: #8800ff;
+    text-decoration: none;
+}
+
+.kategorija{
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #8800ff;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.kategorija:hover{
+    background-color: #daafff;
+    color: #fff;
 }

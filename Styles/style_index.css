@@ -7,6 +7,10 @@ body{
     font-family: sans-serif;
 }
 
+img{
+    border-radius: 5px;
+}
+
 .nav {
     background-color: #8800ff;
     border-color: #d000ff;
@@ -78,13 +82,14 @@ body{
 }
 
 .content{
-    width: 100%;
+    width: 95%;
     background-color: #fff;
     border-radius: 5px;
     border: 1px solid #8800ff;
     margin-top: 25px;
     padding: 5px;
     margin-bottom: 5px;
+    margin-left: 20px;
 }
 
 .kategorije{
@@ -109,4 +114,92 @@ body{
 .kategorija:hover{
     background-color: #daafff;
     color: #fff;
+}
+
+.dodaj{
+    margin-bottom: 20px;
+}
+
+.dodaj a{
+    background-color: #8800ff;
+    border-radius: 5px;
+    padding: 5px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.dodaj-form{
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.dodaj-form input{
+    width: 95%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 3px;
+    border: 1px solid #8800ff;
+}
+
+.dodaj-form .btn{
+    background-color: #8800ff;
+    border-radius: 5px;
+    padding: 10px;
+    color: #ffffff;
+    border: 1px solid #8800ff;
+    width: 100%;
+}
+
+.dodaj-form .btn:hover{
+    background-color: #daafff;
+    color: #8800ff;
+    cursor: pointer;
+}
+
+.dodaj-form select{
+    width: 97%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 3px;
+    border: 1px solid #8800ff;
+}
+
+.dodaj-form textarea{
+    width: 95%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 3px;
+    border: 1px solid #8800ff;
+}
+
+.oglas{
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #8800ff;
+    padding: 5px;
+    margin-bottom: 5px;
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    margin-bottom: 20px;
+}
+
+.oglas .naslov{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.oglas a{
+    color: #8800ff;
+    text-decoration: none;
+}
+
+.oglas .opis{
+    font-size: 12px;
+    color: rgb(86, 86, 86);
 }

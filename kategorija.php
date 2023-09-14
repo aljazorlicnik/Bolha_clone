@@ -52,19 +52,22 @@ else{
                 echo "<p class='k-naslov'>V tej kategoriji ni oglasov.</p>";
             }
             else{
-                echo "<p class='k-naslov'>Oglasi:</p><br>";
                 while($row = mysqli_fetch_assoc($result)){
                     $id_oglasa = $row['id'];
+                    $sql2 = "SELECT * FROM slike WHERE oglas_id = $id_oglasa";
+                    $result2 = mysqli_query($link, $sql2);
+                    $row2 = mysqli_fetch_assoc($result2);
                     $naslov = $row['naslov'];
                     $cena = $row['cena'];
-                    $slika = $row['slika'];
+                    $slika = $row2['slika'];
                     $id_kategorije = $row['kategorija_id'];
                     $sql = "SELECT * FROM kategorije WHERE id = $id_kategorije";
                     $result2 = mysqli_query($link, $sql);
                     $row2 = mysqli_fetch_assoc($result2);
                     $kategorija = $row2['kategorija'];
+                    echo "<p class='k-naslov'>Oglasi v kategoriji $kategorija:</p><br>";
                     echo "<div class='oglas'>";
-                    echo "<div class='oglas-img'><img src='$slika' alt='slika'></div>";
+                    echo "<div class='oglas-img'><img src='$slika' width='250px' alt='slika'></div>";
                     echo "<div class='oglas-content'>";
                     echo "<p class='naslov'>$naslov</p>";
                     echo "<p class='cena'>$cena €</p>";

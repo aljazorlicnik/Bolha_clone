@@ -30,6 +30,7 @@ else{
         <div class="nav">
             <a href="index.php">Muha</a>
             <a href="oglasi.php">Moji oglasi</a>
+            <a href="sporocila.php">Sporočila</a>
             <div class="profil">
                 <a href="profil.php?id=<?php echo $id; ?>"><?php echo $ime . " " . $priimek; ?></a>
                 <a class="odjava" href="odjava.php">Odjava</a>

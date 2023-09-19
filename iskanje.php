@@ -1,3 +1,4 @@
+<!-- search -->
 <?php
 require_once 'baza.php';
 require_once 'cookie.php';
@@ -12,9 +13,19 @@ else{
     $id = $_SESSION['id'];
 }
 
+$sql = "SELECT * FROM kraji";
+$result = mysqli_query($link, $sql);
+$sql2 = "SELECT * FROM kategorije";
+$result2 = mysqli_query($link, $sql2);
+
+$input = $_POST['iskanje'];
+// select from oglasi where naslov like input or opis like input
+$sql = "SELECT * FROM oglasi WHERE naslov LIKE '%$input%' OR opis LIKE '%$input%'";
+$result = mysqli_query($link, $sql);
 ?>
 
 <!-- HTML -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +34,7 @@ else{
     <title>Domov - Muha</title>
     <link rel="stylesheet" href="./styles/style_index.css">
 </head>
+
 <body>
     <!-- make a nav with domov, moji oglasi, profil and search -->
     <nav>
@@ -43,13 +55,11 @@ else{
         </form>
     </div>
     <div class="content">
-       <!-- display all oglasi where uporabnik_id = session[id] -->
+        <!-- display all oglasi where uporabnik_id = session[id] -->
         <?php
-            $sql = "SELECT * FROM oglasi WHERE uporabnik_id = $id";
-            $result = mysqli_query($link, $sql);
             $st_oglasov = mysqli_num_rows($result);
             if($st_oglasov == 0){
-                echo "<p class='k-naslov'>Nimate nobenega oglasa.</p>";
+                echo "<p class='k-naslov'>Najden ni bil noben oglas.</p>";
             }
             else{
                 echo "<p class='k-naslov'>Moji oglasi:</p><br>";
@@ -59,26 +69,24 @@ else{
                     $sql2 = "SELECT * FROM slike WHERE  oglas_id = $id_oglasa";
                     $result2 = mysqli_query($link, $sql2);
                     $row2 = mysqli_fetch_assoc($result2);
-                    $naslov = $row['naslov'];
-                    $cena = $row['cena'];
-                    $opis = $row['opis'];
                     $slika = $row2['slika'];
+                    $naslov = $row['naslov'];
+                    $opis = $row['opis'];
+                    $cena = $row['cena'];
+                    $kraj_id = $row['kraj_id'];
+                    $kategorija_id = $row['kategorija_id'];
+
                     echo "<div class='oglas'>";
-                    echo "<a href='oglas.php?id=$id_oglasa'><img src='$slika' alt='slika' width='200px' height='200px'></a>";
+                    echo "<div class='oglas-img'>";
+                    echo "<img src='$slika' alt='slika' width='200px' height='200px'>";
+                    echo "</div>";
+                    echo "<div class='oglas-info'>";
                     echo "<a href='oglas.php?id=$id_oglasa'><p>$naslov</p></a>";
-                    echo "<p class='opis'>$opis</p>";
+                    echo "<p>$opis</p>";
                     echo "<p>$cena €</p>";
-                    echo "<a href='uredi_oglas.php?id=$id_oglasa'><div class=uredi-btn>Uredi</div></a>";
-                    echo "<a  href='izbrisi_oglas.php?id=$id_oglasa'><div class=izbrisi-btn>Izbriši</div></a>";
+                    echo "<a href='pogovor.php?id=$id_oglasa'><div class='pogovor-btn'>Začni pogovor</div></a>";
+                    echo "</div>";
                     echo "</div>";
                 }
             }
         ?>
-        </div>
-        <!-- dodaj oglas -->
-        <div class="dodaj">
-            <a href="dodaj_oglas.php">Dodaj oglas</a>
-        </div>
-    </div>
-</body>
-</html>

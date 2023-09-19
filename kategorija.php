@@ -29,6 +29,7 @@ else{
         <div class="nav">
             <a href="index.php">Muha</a>
             <a href="oglasi.php">Moji oglasi</a>
+            <a href="sporocila.php">Sporočila</a>
             <div class="profil">
                 <a href="profil.php?id=<?php echo $id; ?>"><?php echo $ime . " " . $priimek; ?></a>
                 <a class="odjava" href="odjava.php">Odjava</a>
@@ -52,6 +53,12 @@ else{
                 echo "<p class='k-naslov'>V tej kategoriji ni oglasov.</p>";
             }
             else{
+                $sql_ka = "SELECT * FROM kategorije WHERE id = $id_kategorije";
+                $result_ka = mysqli_query($link, $sql_ka);
+                $row_ka = mysqli_fetch_assoc($result_ka);
+                $kategorija = $row_ka['kategorija'];
+                echo "<p class='k-naslov'>Oglasi v kategoriji $kategorija:</p><br>";
+                echo "<div class='oglasi'>";
                 while($row = mysqli_fetch_assoc($result)){
                     $id_oglasa = $row['id'];
                     $sql2 = "SELECT * FROM slike WHERE oglas_id = $id_oglasa";
@@ -65,17 +72,17 @@ else{
                     $result2 = mysqli_query($link, $sql);
                     $row2 = mysqli_fetch_assoc($result2);
                     $kategorija = $row2['kategorija'];
-                    echo "<p class='k-naslov'>Oglasi v kategoriji $kategorija:</p><br>";
                     echo "<div class='oglas'>";
-                    echo "<div class='oglas-img'><img src='$slika' width='250px' alt='slika'></div>";
+                    echo "<div class='oglas-img'><img src='$slika' width='250px' height='250px' alt='slika'></div>";
                     echo "<div class='oglas-content'>";
                     echo "<p class='naslov'>$naslov</p>";
-                    echo "<p class='cena'>$cena €</p>";
-                    echo "<p class='kategorija'>Kategorija: $kategorija</p>";
-                    echo "<a class='btn' href='oglas.php?id=$id_oglasa'>Več</a>";
+                    echo "<div class='kategorije-cena'>$cena €</div>";
+                    // začni pogovor
+                    echo "<a href='pogovor.php?id=$id_oglasa'><div class='pogovor-btn'>Začni pogovor</div></a>";
                     echo "</div>";
                     echo "</div>";
                 }
+                echo "</div>";
             }
             ?>
     </div>

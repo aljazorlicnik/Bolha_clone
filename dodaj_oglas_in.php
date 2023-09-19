@@ -83,7 +83,7 @@ $sql = "INSERT INTO slike (slika, oglas_id) VALUES ('$target_file', '$id_oglasa'
 $result = mysqli_query($link, $sql);
 
 if($result){
-    header("Location: index.php");
+    header("Location: oglasi.php");
     exit;
 }
 else{
@@ -91,3 +91,4 @@ else{
 }
 
 ?>
+

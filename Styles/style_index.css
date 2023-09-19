@@ -5,6 +5,7 @@ body{
 
 *{
     font-family: sans-serif;
+    object-fit: cover;
 }
 
 img{
@@ -19,6 +20,7 @@ img{
     display: flex;
     align-items: center;
     flex-direction: row;
+    width: auto;
 }
 
 .nav input {
@@ -68,7 +70,7 @@ img{
 }
 
 .profil{
-    margin-left: 55%;
+    margin-left: 45%;
     margin-top: 10px;
 }
 
@@ -174,6 +176,14 @@ img{
     border: 1px solid #8800ff;
 }
 
+.oglasi{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: left;
+}
+
 .oglas{
     background-color: #fff;
     border-radius: 5px;
@@ -192,6 +202,10 @@ img{
 .oglas .naslov{
     font-size: 20px;
     font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
 .oglas a{
@@ -202,4 +216,63 @@ img{
 .oglas .opis{
     font-size: 12px;
     color: rgb(86, 86, 86);
+}
+
+.uredi-btn{
+    background-color: #8800ff;
+    border-radius: 5px;
+    padding: 5px;
+    color: #ffffff;
+    text-decoration: none;
+    margin-bottom: 5px;
+}
+
+.uredi-btn:hover{
+    background-color: #daafff;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.izbrisi-btn{
+    background-color: rgb(252, 102, 102);
+    border-radius: 5px;
+    padding: 5px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.izbrisi-btn:hover{
+    background-color: #ffcccc;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.oglas .slika{
+    width: 100%;
+    height: 200px;
+    margin-bottom: 5px;
+}
+
+.kategorije-cena{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.pogovor-btn{
+    background-color: #8800ff;
+    border-radius: 5px;
+    padding: 5px;
+    color: #ffffff;
+    text-decoration: none;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+.pogovor-btn:hover{
+    background-color: #daafff;
+    color: #ffffff;
+    cursor: pointer;
 }

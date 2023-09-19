@@ -64,8 +64,8 @@ else{
                     $opis = $row['opis'];
                     $slika = $row2['slika'];
                     echo "<div class='oglas'>";
-                    echo "<a href='oglas.php?id=$id_oglasa'><img src='$slika' alt='slika' width='200px' height='200px'></a>";
-                    echo "<a href='oglas.php?id=$id_oglasa'><p>$naslov</p></a>";
+                    echo "<img src='$slika' alt='slika' width='200px' height='200px'>";
+                    echo "<p>$naslov</p>";
                     echo "<p class='opis'>$opis</p>";
                     echo "<p>$cena €</p>";
                     echo "<a href='uredi_oglas.php?id=$id_oglasa'><div class=uredi-btn>Uredi</div></a>";

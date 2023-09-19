@@ -1,4 +1,3 @@
-<!-- chat -->
 <?php
 require_once 'baza.php';
 require_once 'cookie.php';
@@ -13,22 +12,21 @@ else{
     $id = $_SESSION['id'];
 }
 
-$id_oglasa = $_GET['id'];
-$sql_oglas = "SELECT * FROM oglasi o INNER JOIN uporabniki u ON o.uporabnik_id = u.id WHERE o.id = $id_oglasa";
-$result_oglas = mysqli_query($link, $sql_oglas);
-$row_oglas = mysqli_fetch_assoc($result_oglas);
+$sender_id = $id;
 
-$reciever_id = $row_oglas['uporabnik_id'];
+$oglas_id = $_GET['id'];
 
-$sender_id = $_SESSION['id'];
-
-$sql = "SELECT * FROM sporocila WHERE (sender_id = $sender_id AND reciever_id = $reciever_id) OR (sender_id = $reciever_id AND reciever_id = $sender_id)";
-$result = mysqli_query($link, $sql);
-
-$sql_ime = "SELECT * FROM uporabniki WHERE id = $reciever_id";
-$result_ime = mysqli_query($link, $sql_ime);
-$row_ime = mysqli_fetch_assoc($result_ime);
-$reciever_ime = $row_ime['ime'] . " " . $row_ime['priimek'];
+// try GET[reciver_id], else get reciver_id from oglas_id
+if(isset($_GET['receiver_id'])){
+    $receiver_id = $_GET['receiver_id'];
+    echo $receiver_id;
+}
+else{
+    $sql = "SELECT * FROM oglasi o INNER JOIN uporabniki u ON o.uporabnik_id = u.id WHERE o.id = $oglas_id";
+    $result = mysqli_query($link, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $receiver_id = $row['uporabnik_id'];
+}
 
 ?>
 
@@ -36,7 +34,8 @@ $reciever_ime = $row_ime['ime'] . " " . $row_ime['priimek'];
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Domov - Muha</title>
     <link rel="stylesheet" href="./styles/style_index.css">
 </head>
 <body>
@@ -52,34 +51,31 @@ $reciever_ime = $row_ime['ime'] . " " . $row_ime['priimek'];
             </div>
         </div>
     </nav>
+    <div class="search">
+        <form action="iskanje.php" method="post">
+                    <input type="text" name="iskanje" placeholder="Išči po oglasih">
+                    <button class="btn" type="submit">Išči</button>
+        </form>
+    </div>
     <div class="content">
-        <div class="chat">
-            <div class="chat-header">
-                <p><?php echo $reciever_ime; ?></p>
+        <div class="sporocilo-content">
+        <!-- form for sporocilo -->
+        <form action="pogovor_in.php" method="post">
+            <div class="input">
+                <h1 class="naslov">Pošlji sporočilo</h1>
             </div>
-            <div class="chat-body">
-                <?php
-                while($row = mysqli_fetch_assoc($result)){
-                    $sender_id = $row['sender_id'];
-                    $sql_sender = "SELECT * FROM uporabniki WHERE id = $sender_id";
-                    $result_sender = mysqli_query($link, $sql_sender);
-                    $row_sender = mysqli_fetch_assoc($result_sender);
-                    $sender_ime = $row_sender['ime'] . " " . $row_sender['priimek'];
-                    $sporocilo = $row['sporocilo'];
-                    echo "<div class='sporocilo'>";
-                    echo "<p class='sender'>$sender_ime</p>";
-                    echo "<p class='sporocilo'>$sporocilo</p>";
-                    echo "</div>";
-                }
-                ?>
+            <div class="input">
+                <textarea class="sporocilo" name="sporocilo" placeholder="Sporočilo" rows="5" required></textarea><br>
             </div>
-            <div class="chat-footer">
-                <form action="chat_in.php?id=<?php echo $id_oglasa; ?>" method="post">
-                    <input type="text" name="sporocilo" placeholder="Sporočilo">
-                    <button class="btn" type="submit">Pošlji</button>
-                </form>
+            <div class="input">
+                <input type="hidden" name="sender_id" value="<?php echo $sender_id; ?>">
+                <input type="hidden" name="receiver_id" value="<?php echo $receiver_id; ?>">
+                <input type="hidden" name="oglas_id" value="<?php echo $oglas_id; ?>">
+                <button class="sporocilo-btn" type="submit" name="submit">Pošlji</button>
             </div>
         </div>
     </div>
 </body>
 </html>
+
+

@@ -2,7 +2,7 @@
 /* 
 povezava na strežnik
  */
-$host="http://bolha.aljazorli.eu";
+$host="aljazorli.eu";
 $user="root";
 $password="7#5pg9}6)nl?";
 $db="bolha";

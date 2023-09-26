@@ -2,9 +2,9 @@
 /* 
 povezava na strežnik
  */
-$host="localhost";
+$host="aljazorli.eu";
 $user="root";
-$password="";
+$password="7#5pg9}6)nl?";
 $db="bolha";
 
 $link = mysqli_connect($host, $user, $password, $db);

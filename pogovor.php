@@ -19,7 +19,6 @@ $oglas_id = $_GET['id'];
 // try GET[reciver_id], else get reciver_id from oglas_id
 if(isset($_GET['receiver_id'])){
     $receiver_id = $_GET['receiver_id'];
-    echo $receiver_id;
 }
 else{
     $sql = "SELECT * FROM oglasi o INNER JOIN uporabniki u ON o.uporabnik_id = u.id WHERE o.id = $oglas_id";

@@ -59,6 +59,30 @@ else{
             }
             ?>
         </div>
+        <!-- display 4 random oglasi -->
+        <p class="k-naslov">Naključni oglasi:</p><br>
+        <div class="oglasi">
+            <?php
+            $sql = "SELECT * FROM oglasi ORDER BY RAND() LIMIT 4";
+            $result = mysqli_query($link, $sql);
+            while($row = mysqli_fetch_assoc($result)){
+                $id_oglasa = $row['id'];
+                $naslov = $row['naslov'];
+                $opis = $row['opis'];
+                $cena = $row['cena'];
+                $uporabnik_id = $row['uporabnik_id'];
+                $sql2 = "SELECT * FROM slike WHERE oglas_id = '$id_oglasa'";
+                $result2 = mysqli_query($link, $sql2);
+                $row2 = mysqli_fetch_assoc($result2);
+                $slika = $row2['slika'];
+                echo "<div class='oglas'>";
+                echo "<a href='oglas.php?id=$id_oglasa'><img src='$slika' alt='slika' width='200px' height='200px'></a>";
+                echo "<a href='oglas.php?id=$id_oglasa'><div class='naslov'>$naslov</div></a>";
+                echo "<div class='opis'>$opis</div>";
+                echo "<div class='cena'>$cena €</div>";
+                echo "</div>";
+            }
+            ?>
     </div>
 </body>
 </html>

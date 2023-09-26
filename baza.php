@@ -5,7 +5,7 @@ povezava na strežnik
 $host="aljazorli.eu";
 $user="root";
 $password="7#5pg9}6)nl?";
-$db="bolha";
+$db="orlieu_bolha";
 
 $link = mysqli_connect($host, $user, $password, $db);
 

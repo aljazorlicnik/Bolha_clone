@@ -33,6 +33,7 @@ if(isset($_POST["submit"])){
     }
     else{
         echo "<script>alert('Dovoljene so samo slike.')</script>";
+        echo "<script>window.history.back();</script>";
         $uploadOk = 0;
     }
 }
@@ -40,18 +41,21 @@ if(isset($_POST["submit"])){
 // check if file already exists
 if(file_exists($target_file)){
     echo "<script>alert('Datoteka že obstaja.')</script>";
+    echo "<script>window.history.back();</script>";
     $uploadOk = 0;
 }
 
 // check file size
 if($_FILES["slika"]["size"] > 500000){
     echo "<script>alert('Datoteka je prevelika.')</script>";
+    echo "<script>window.history.back();</script>";
     $uploadOk = 0;
 }
 
 // allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"){
-    echo "Dovoljeni so samo formati: JPG, JPEG, PNG.";
+    echo "<script>alert('Dovoljeni so samo formati: JPG, JPEG, PNG.')</script>";
+    echo "<script>window.history.back();</script>";
     $uploadOk = 0;
 }
 

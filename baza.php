@@ -3,7 +3,7 @@
 povezava na strežnik
  */
 $host="localhost";
-$user="root";
+$user="orlieu_root";
 $password="7#5pg9}6)nl?";
 $db="orlieu_bolha";
 

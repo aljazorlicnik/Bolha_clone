@@ -83,7 +83,7 @@ else{
                 </select>
             </div>
             <div class="input">
-                <input type="file" name="slika" required/>
+                <input type="file" name="slika" accept=".png, .jpg" required/>
             </div>
             <div class="input">
                 <button class="btn" type="submit">Dodaj oglas</button>

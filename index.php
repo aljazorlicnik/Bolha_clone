@@ -63,7 +63,7 @@ else{
         <p class="k-naslov">Naključni oglasi:</p><br>
         <div class="oglasi">
             <?php
-            $sql = "SELECT * FROM oglasi ORDER BY RAND() LIMIT 4";
+            $sql = "SELECT * FROM oglasi ORDER BY RAND() LIMIT 3";
             $result = mysqli_query($link, $sql);
             while($row = mysqli_fetch_assoc($result)){
                 $id_oglasa = $row['id'];
@@ -76,10 +76,11 @@ else{
                 $row2 = mysqli_fetch_assoc($result2);
                 $slika = $row2['slika'];
                 echo "<div class='oglas'>";
-                echo "<a href='oglas.php?id=$id_oglasa'><img src='$slika' alt='slika' width='200px' height='200px'></a>";
-                echo "<a href='oglas.php?id=$id_oglasa'><div class='naslov'>$naslov</div></a>";
+                echo "<img src='$slika' alt='slika' width='200px' height='200px'></a>";
+                echo "<div class='naslov'>$naslov</div></a>";
                 echo "<div class='opis'>$opis</div>";
                 echo "<div class='cena'>$cena €</div>";
+                echo "<a href='pogovor.php?id=$id_oglasa'><div class='pogovor-btn'>Začni pogovor</div></a>";
                 echo "</div>";
             }
             ?>

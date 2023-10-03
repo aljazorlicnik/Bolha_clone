@@ -75,14 +75,14 @@ $result = mysqli_query($link, $sql);
         ?>
         <a class="sporocila-a" href="pogovor.php?id=<?php echo $oglas_id; ?>&receiver_id=<?php echo $receiver_id; ?>">
             <div class="sporocila">
-                <div class="naslov">
-                    <span class="bold"></span> <?php echo $naslov_oglasa; ?>
+                <div class="bold">
+                    <span></span> <?php echo $naslov_oglasa; ?>
                 </div>
                 <div class="ime">
                     <span class="bold">Pošiljatelj:</span> <?php echo $sender_ime . " " . $sender_priimek; ?>
                 </div>
-                <div>
-                    <span class="bold">Sporočilo:</span> <?php echo $vsebina; ?>
+                <div class="sporocilo-text">
+                    <span>Sporočilo:</span> <?php echo $vsebina; ?>
                 </div>
                 <div class="cas">
                     <span class="bold">Poslano pred:</span> <?php echo $cas_posiljanja; ?>

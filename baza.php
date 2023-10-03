@@ -1,11 +1,15 @@
 <?php
-/* 
-povezava na strežnik
- */
+//server
 $host="localhost";
 $user="orlieu_root";
 $password="7#5pg9}6)nl?";
 $db="orlieu_bolha";
+
+//local
+// $host = "localhost";
+// $user = "root";
+// $password = "";
+// $db = "bolha";
 
 $link = mysqli_connect($host, $user, $password, $db);
 

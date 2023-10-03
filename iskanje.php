@@ -84,7 +84,7 @@ $result = mysqli_query($link, $sql);
                     echo "<a href='oglas.php?id=$id_oglasa'><p>$naslov</p></a>";
                     echo "<p>$opis</p>";
                     echo "<p>$cena €</p>";
-                    echo "<a href='pogovor.php?id=$id_oglasa'><div class='pogovor-btn'>Začni pogovor</div></a>";
+                    echo "<a href='oglas.php?id=$id_oglasa'><div class='pogovor-btn'>Več</div></a>";
                     echo "</div>";
                     echo "</div>";
                 }

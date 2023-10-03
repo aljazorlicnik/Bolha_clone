@@ -80,7 +80,7 @@ else{
                 echo "<div class='naslov'>$naslov</div></a>";
                 echo "<div class='opis'>$opis</div>";
                 echo "<div class='cena'>$cena €</div>";
-                echo "<a href='pogovor.php?id=$id_oglasa'><div class='pogovor-btn'>Začni pogovor</div></a>";
+                echo "<a href='oglas.php?id=$id_oglasa'><div class='pogovor-btn'>Več</div></a>";
                 echo "</div>";
             }
             ?>

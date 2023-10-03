@@ -5,7 +5,7 @@ $user="orlieu_root";
 $password="7#5pg9}6)nl?";
 $db="orlieu_bolha";
 
-//local
+// local
 // $host = "localhost";
 // $user = "root";
 // $password = "";

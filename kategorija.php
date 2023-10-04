@@ -73,7 +73,7 @@ else{
                     $row2 = mysqli_fetch_assoc($result2);
                     $kategorija = $row2['kategorija'];
                     echo "<div class='oglas'>";
-                    echo "<img src='$slika' width='250px' height='250px' alt='slika'>";
+                    echo "<img src='$slika' max-width='250px' max-height='250px' alt='slika'>";
                     echo "<div class='oglas-content'>";
                     echo "<p class='naslov'>$naslov</p>";
                     echo "<div class='kategorije-cena'>$cena €</div>";

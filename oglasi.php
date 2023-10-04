@@ -64,7 +64,7 @@ else{
                     $opis = $row['opis'];
                     $slika = $row2['slika'];
                     echo "<div class='oglas'>";
-                    echo "<img src='$slika' alt='slika' max-width='200px' max-height='200px'>";
+                    echo "<img src='$slika' alt='slika' max-width='90%' height='200px'>";
                     echo "<p>$naslov</p>";
                     echo "<p class='opis'>$opis</p>";
                     echo "<p>$cena €</p>";

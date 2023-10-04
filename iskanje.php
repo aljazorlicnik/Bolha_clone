@@ -78,7 +78,7 @@ $result = mysqli_query($link, $sql);
 
                     echo "<div class='oglas'>";
                     echo "<div class='oglas-img'>";
-                    echo "<img src='$slika' alt='slika' max-width='200px' max-height='200px'>";
+                    echo "<img src='$slika' alt='slika' max-width='90%' height='200px'>";
                     echo "</div>";
                     echo "<div class='oglas-info'>";
                     echo "<a href='oglas.php?id=$id_oglasa'><p>$naslov</p></a>";

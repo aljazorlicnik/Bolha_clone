@@ -20,7 +20,7 @@
     <p>Poveži svoj trenutni račun, z svojim google računom za lažjo prijavo:</p>
  <form action="googlelink.php" method="post">
  <label for="email">Mail:</label>
-  <input type="text" id="email" name="email" required readonly value = "<?php echo $_SESSION['mail'] ?>">
+  <input type="text" id="email" name="email" required readonly value = "<?php echo $_SESSION['email'] ?>">
   <label for="geslo">Geslo:</label>
   <input type="password" id="geslo" name="geslo" required>  
   <input type="submit" value="Pošlji">

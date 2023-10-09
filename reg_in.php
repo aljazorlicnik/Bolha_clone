@@ -39,7 +39,7 @@ if ($prevStatement->rowCount() === 1) {
     }
 
     if ($insertStatement->execute()) {
-        header("Refresh:0;url=prijava.php");
+        header("Refresh:0;url=index.php");
     } else {
         header("Refresh:0;url=registracija.php");
         echo '<script>alert("Registracija ni uspela.")</script>';

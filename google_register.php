@@ -7,19 +7,8 @@
     <title>Registracija</title>
 </head>
 <body>
-<nav class="navbar">
-        <div class="navbar-left">
-            <b style = "color:white; font-family:'Courier New', Courier, monospace">SteamCopy</b>
-        </div>
-        <div class="navbar-center">
-            <button class="center-button" onclick="location.href='index.php'">Store</button>
-            <button class='center-button' onclick="location.href='library.php'">Library</button>
-            <button class="center-button" onclick="location.href='community.php'">Community</button>
-        </div>
-        <div class="navbar-right">
-        </div>
-    </nav>
   <?php
+  require_once 'cookie.php';
   if(isset($_SESSION['id'])){
     header('Location: index.php');
     exit();
@@ -36,10 +25,8 @@
   <input type="text" id="ime" name="ime" value = "<?php echo $_SESSION['ime'] ?>" required>  
   <label for="priimek">Priimek:</label>
   <input type="text" id="priimek" name="priimek" required  value = "<?php echo $_SESSION['priimek'] ?>">  
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username"  required>  
   <label for="email">Mail:</label>
-  <input type="text" id="email" name="email" required value = "<?php echo $_SESSION['email'] ?>">  
+  <input type="text" id="email" name="email" required value = "<?php echo $_SESSION['email'] ?>" readonly>  
   <label for="geslo">Geslo:</label>
   <input type="password" id="geslo" name="geslo" required>  
 </datalist>

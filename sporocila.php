@@ -18,7 +18,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Fetch sporocila using prepared statement
-    $stmt = $pdo->prepare("SELECT * FROM sporocila WHERE sender_id = :id OR receiver_id = :id");
+    $stmt = $pdo->prepare("SELECT * FROM sporocila WHERE sender_id = :id OR receiver_id = :id ORDER BY cas DESC");
     $stmt->execute(['id' => $id]);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

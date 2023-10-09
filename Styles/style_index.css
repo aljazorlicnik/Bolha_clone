@@ -269,6 +269,13 @@ img {
     text-decoration: none;
 }
 
+/* keep image sizes consistent */
+.img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .izbrisi-btn:hover{
     background-color: #ffcccc;
     color: #ffffff;

@@ -26,7 +26,7 @@
   <label for="priimek">Priimek:</label>
   <input type="text" id="priimek" name="priimek" required  value = "<?php echo $_SESSION['priimek'] ?>">  
   <label for="email">Mail:</label>
-  <input type="text" id="email" name="email" required value = "<?php echo $_SESSION['email'] ?>" readonly>  
+  <input type="text" id="email" name="e-mail" required value = "<?php echo $_SESSION['email'] ?>" readonly>  
   <label for="geslo">Geslo:</label>
   <input type="password" id="geslo" name="geslo" required>  
 </datalist>

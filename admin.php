@@ -47,7 +47,6 @@ try {
                 <th>Kraj</th>
                 <th>Kategorija</th>
                 <th>Avtor</th>
-                <th>Uredi</th>
                 <th>Izbriši</th>
             </tr>
             <?php foreach ($oglasi as $oglas): ?>
@@ -59,8 +58,7 @@ try {
                     <td><?php echo $oglas['kraj_id']; ?></td>
                     <td><?php echo $oglas['kategorija_id']; ?></td>
                     <td><?php echo $oglas['uporabnik_id']; ?></td>
-                    <td><a href="admin_oglas_uredi.php?id=<?php echo $oglas['id']; ?>">Uredi</a></td>
-                    <td><a href="admin_oglas_izbrisi.php?id=<?php echo $oglas['id']; ?>">Izbriši</a></td>
+                    <td><a href="izbrisi_oglas.php?id=<?php echo $oglas['id']; ?>">Izbriši</a></td>
                 </tr>
             <?php endforeach; ?>
         </table>

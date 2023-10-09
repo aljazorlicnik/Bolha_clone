@@ -2,25 +2,40 @@
 require_once 'baza.php';
 require_once 'cookie.php';
 
+// Assuming the session is already started
 if (!isset($_SESSION['ime'])) {
     header("Location: prijava.php");
     exit;
-}
-else{
+} else {
     $ime = $_SESSION['ime'];
     $priimek = $_SESSION['priimek'];
     $id = $_SESSION['id'];
 }
 
-$query = "SELECT * FROM uporabniki WHERE id = '$id'";
-$result = mysqli_query($link, $query);
-$row = mysqli_fetch_assoc($result);
-$ime = $row['ime'];
-$priimek = $row['priimek'];
-$email = $row['email'];
+try {
+    try {
+        // Establish a PDO connection using credentials from baza.php
+        $pdo = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+        // Fetch sporocila using prepared statement
+        $stmt = $pdo->prepare("SELECT * FROM sporocila WHERE sender_id = :id OR receiver_id = :id");
+        $stmt->execute(['id' => $id]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        die("Error: " . $e->getMessage());
+    }
+    $stmt = $pdo->prepare("SELECT * FROM uporabniki WHERE id = :id");
+    $stmt->execute(['id' => $id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $ime = $row['ime'];
+    $priimek = $row['priimek'];
+    $email = $row['email'];
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
 ?>
 
-<!-- HTML -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,6 +74,8 @@ $email = $row['email'];
                 <input type="password" name="geslo2" id="geslo2"><br>
                 <button class="btn" type="submit">Shrani</button>
             </form>
+            <!-- if admin==1 add an admin button -->
+        </div>
     </div>
 </body>
 </html>

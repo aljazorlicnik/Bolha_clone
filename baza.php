@@ -11,11 +11,10 @@ $user = "root";
 $password = "";
 $db = "bolha";
 
-$link = mysqli_connect($host, $user, $password, $db);
-
-// Check connection
-if (!$link) {
-  die("Povezava ni uspela: " . mysqli_connect_error());
+try {
+  $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $password);
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+  die("Povezava ni uspela: " . $e->getMessage());
 }
-mysqli_set_charset($link, "utf8")
 ?>

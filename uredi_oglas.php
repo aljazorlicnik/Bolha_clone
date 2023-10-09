@@ -1,6 +1,3 @@
-<!-- uredi oglas where id = get id -->
-<!-- form: uredi oglas naslov, opis, cena, select kraj, select kategorija-->
-
 <?php
 require_once 'baza.php';
 require_once 'cookie.php';
@@ -17,19 +14,26 @@ else{
 
 $id_oglasa = $_GET['id'];
 
-$sql = "SELECT * FROM oglasi WHERE id = $id_oglasa";
-$result = mysqli_query($link, $sql);
-$row = mysqli_fetch_assoc($result);
-$naslov = $row['naslov'];
-$opis = $row['opis'];
-$cena = $row['cena'];
-$kraj_id = $row['kraj_id'];
-$kategorija_id = $row['kategorija_id'];
+try {
+    // Establish a PDO connection using credentials from baza.php
+    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$sql = "SELECT * FROM kraji";
-$result = mysqli_query($link, $sql);
-$sql2 = "SELECT * FROM kategorije";
-$result2 = mysqli_query($link, $sql2);
+    $sql_id = $pdo->quote($id_oglasa);
+    $sql = "SELECT * FROM oglasi WHERE id = $sql_id";
+    $stmt = $pdo->query($sql);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $naslov = $row['naslov'];
+    $opis = $row['opis'];
+    $cena = $row['cena'];
+    $kraj_id = $row['kraj_id'];
+    $kategorija_id = $row['kategorija_id'];
+
+    $stmt = $pdo->query("SELECT * FROM kraji");
+    $stmt2 = $pdo->query("SELECT * FROM kategorije");
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
 ?>
 
 <!-- HTML -->
@@ -73,7 +77,7 @@ $result2 = mysqli_query($link, $sql2);
             <div class="input">
                 <select name="kraj" required>
                     <?php
-                    while($row = mysqli_fetch_assoc($result)){
+                    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
                         $id_kraja = $row['id'];
                         $ime_kraja = $row['kraj'];
                         if($id_kraja == $kraj_id){
@@ -89,7 +93,7 @@ $result2 = mysqli_query($link, $sql2);
             <div class="input">
                 <select name="kategorija" required>
                     <?php
-                    while($row2 = mysqli_fetch_assoc($result2)){
+                    while($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)){
                         $id_kategorije = $row2['id'];
                         $ime_kategorije = $row2['kategorija'];
                         if($id_kategorije == $kategorija_id){
@@ -109,4 +113,3 @@ $result2 = mysqli_query($link, $sql2);
     </div>
 </body>
 </html>
-

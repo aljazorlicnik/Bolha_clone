@@ -2,19 +2,50 @@
 require_once 'baza.php';
 require_once 'cookie.php';
 
+// Assuming the session is already started
 if (!isset($_SESSION['ime'])) {
     header("Location: prijava.php");
     exit;
-}
-else{
+} else {
     $ime = $_SESSION['ime'];
     $priimek = $_SESSION['priimek'];
     $id = $_SESSION['id'];
 }
 
+try {
+    // Establish a PDO connection using credentials from baza.php
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
+
+// Process the category ID from GET parameter
+$id_kategorije = isset($_GET['id']) ? $_GET['id'] : 0;
+
+try {
+    // Fetch category information
+    $stmt_ka = $pdo->prepare("SELECT * FROM kategorije WHERE id = :id_kategorije");
+    $stmt_ka->execute(['id_kategorije' => $id_kategorije]);
+    $row_ka = $stmt_ka->fetch(PDO::FETCH_ASSOC);
+    $kategorija = $row_ka['kategorija'];
+
+    // Fetch ads in the selected category
+    $stmt = $pdo->prepare("SELECT o.*, s.slika, k.kategorija 
+                          FROM oglasi o 
+                          LEFT JOIN slike s ON o.id = s.oglas_id 
+                          LEFT JOIN kategorije k ON o.kategorija_id = k.id 
+                          WHERE o.kategorija_id = :id_kategorije");
+    $stmt->execute(['id_kategorije' => $id_kategorije]);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $st_oglasov = count($results);
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
 ?>
 
 <!-- HTML -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +54,7 @@ else{
     <title>Domov - Muha</title>
     <link rel="stylesheet" href="./styles/style_index.css">
 </head>
+
 <body>
     <!-- make a nav with domov, moji oglasi, profil and search -->
     <nav>
@@ -43,37 +75,22 @@ else{
         </form>
     </div>
     <div class="content">
-       <!-- select all oglas from oglasi where kategorija_id = get[id, if there is none display 0 -->
-         <?php
-            $id_kategorije = $_GET['id'];
-            $sql = "SELECT * FROM oglasi WHERE kategorija_id = $id_kategorije";
-            $result = mysqli_query($link, $sql);
-            $st_oglasov = mysqli_num_rows($result);
-            if($st_oglasov == 0){
+        <?php
+            if ($st_oglasov == 0) {
                 echo "<p class='k-naslov'>V tej kategoriji ni oglasov.</p>";
-            }
-            else{
-                $sql_ka = "SELECT * FROM kategorije WHERE id = $id_kategorije";
-                $result_ka = mysqli_query($link, $sql_ka);
-                $row_ka = mysqli_fetch_assoc($result_ka);
-                $kategorija = $row_ka['kategorija'];
+            } else {
                 echo "<p class='k-naslov'>Oglasi v kategoriji $kategorija:</p><br>";
                 echo "<div class='oglasi'>";
-                while($row = mysqli_fetch_assoc($result)){
+                foreach ($results as $row) {
                     $id_oglasa = $row['id'];
-                    $sql2 = "SELECT * FROM slike WHERE oglas_id = $id_oglasa";
-                    $result2 = mysqli_query($link, $sql2);
-                    $row2 = mysqli_fetch_assoc($result2);
                     $naslov = $row['naslov'];
                     $cena = $row['cena'];
-                    $slika = $row2['slika'];
-                    $id_kategorije = $row['kategorija_id'];
-                    $sql = "SELECT * FROM kategorije WHERE id = $id_kategorije";
-                    $result2 = mysqli_query($link, $sql);
-                    $row2 = mysqli_fetch_assoc($result2);
-                    $kategorija = $row2['kategorija'];
+                    $slika = $row['slika'];
+
                     echo "<div class='oglas'>";
+                    echo "<div class='oglas-img'>";
                     echo "<img src='$slika' max-width='90%' height='250px' alt='slika'>";
+                    echo "</div>";
                     echo "<div class='oglas-content'>";
                     echo "<p class='naslov'>$naslov</p>";
                     echo "<div class='kategorije-cena'>$cena €</div>";
@@ -83,7 +100,7 @@ else{
                 }
                 echo "</div>";
             }
-            ?>
+        ?>
     </div>
 </body>
 </html>

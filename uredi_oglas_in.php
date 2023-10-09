@@ -19,17 +19,19 @@ $cena = $_POST['cena'];
 $kraj = $_POST['kraj'];
 $kategorija = $_POST['kategorija'];
 
-$sql_id = 
-$sql = "UPDATE oglasi SET naslov = '$naslov', opis = '$opis', cena = '$cena', kraj_id = '$kraj', kategorija_id = '$kategorija' WHERE id = $id";
-$result = mysqli_query($link, $sql);
+try {
+    // Establish a PDO connection using credentials from baza.php
+    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name", $db_user, $db_password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    $sql_id = $pdo->quote($id);
+    $sql = "UPDATE oglasi SET naslov = ?, opis = ?, cena = ?, kraj_id = ?, kategorija_id = ? WHERE id = $sql_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$naslov, $opis, $cena, $kraj, $kategorija]);
 
-if($result){
     header("Location: oglasi.php");
     exit;
-}
-else{
-    echo "<script>alert('Prišlo je do napake.')</script>";
+} catch (PDOException $e) {
+    echo "<script>alert('Prišlo je do napake: " . $e->getMessage() . "')</script>";
 }
 ?>
-

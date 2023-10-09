@@ -5,8 +5,7 @@ require_once 'cookie.php';
 if (!isset($_SESSION['ime'])) {
     header("Location: prijava.php");
     exit;
-}
-else{
+} else {
     $ime = $_SESSION['ime'];
     $priimek = $_SESSION['priimek'];
     $id = $_SESSION['id'];
@@ -14,20 +13,48 @@ else{
 
 $oglas_id = $_GET['id'];
 
-$sql = "SELECT * FROM oglasi WHERE id = '$oglas_id'";
-$result = mysqli_query($link, $sql);
-$row = mysqli_fetch_assoc($result);
-$naslov = $row['naslov'];
-$opis = $row['opis'];
-$cena = $row['cena'];
-$kraj_id = $row['kraj_id'];
-$kategorija_id = $row['kategorija_id'];
-$uporanbik_id = $row['uporabnik_id'];
+try {
+    // Establish a PDO connection using credentials from baza.php
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$sql = "SELECT * FROM kraji";
-$result = mysqli_query($link, $sql);
-$sql2 = "SELECT * FROM kategorije";
-$result2 = mysqli_query($link, $sql2);
+    // Fetch oglas data
+    $stmt = $pdo->prepare("SELECT * FROM oglasi WHERE id = :oglas_id");
+    $stmt->bindParam(':oglas_id', $oglas_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $naslov = $row['naslov'];
+    $opis = $row['opis'];
+    $cena = $row['cena'];
+    $kraj_id = $row['kraj_id'];
+    $kategorija_id = $row['kategorija_id'];
+    $uporabnik_id = $row['uporabnik_id'];
+
+    // Fetch kraj
+    $stmt = $pdo->prepare("SELECT * FROM kraji WHERE id = :kraj_id");
+    $stmt->bindParam(':kraj_id', $kraj_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $kraj = $row['kraj'];
+
+    // Fetch kategorija
+    $stmt = $pdo->prepare("SELECT * FROM kategorije WHERE id = :kategorija_id");
+    $stmt->bindParam(':kategorija_id', $kategorija_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $kategorija = $row['kategorija'];
+
+    // Fetch avtor
+    $stmt = $pdo->prepare("SELECT * FROM uporabniki WHERE id = :uporabnik_id");
+    $stmt->bindParam(':uporabnik_id', $uporabnik_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $avtor_ime = $row['ime'];
+    $avtor_priimek = $row['priimek'];
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
 ?>
 
 <!-- HTML -->
@@ -35,7 +62,7 @@ $result2 = mysqli_query($link, $sql2);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Domov - Muha</title>
     <link rel="stylesheet" href="./styles/style_index.css">
 </head>
@@ -57,11 +84,17 @@ $result2 = mysqli_query($link, $sql2);
         <div class="oglas-prikaz">
             <div class="oglas-img">
                 <?php
-                $sql = "SELECT * FROM slike WHERE oglas_id = '$oglas_id'";
-                $result = mysqli_query($link, $sql);
-                $row = mysqli_fetch_assoc($result);
-                $slika = $row['slika'];
-                echo "<img src='$slika' alt='slika'>";
+                try {
+                    // Fetch slika for the oglas
+                    $stmt = $pdo->prepare("SELECT * FROM slike WHERE oglas_id = :oglas_id");
+                    $stmt->bindParam(':oglas_id', $oglas_id, PDO::PARAM_INT);
+                    $stmt->execute();
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $slika = $row['slika'];
+                    echo "<img src='$slika' alt='slika'>";
+                } catch (PDOException $e) {
+                    echo "Error fetching image: " . $e->getMessage();
+                }
                 ?>
             </div>
             <div class="oglas-infor">
@@ -82,30 +115,16 @@ $result2 = mysqli_query($link, $sql2);
                 </div>
                 <div class="oglas-kraj">
                     <?php
-                    $sql = "SELECT * FROM kraji WHERE id = '$kraj_id'";
-                    $result = mysqli_query($link, $sql);
-                    $row = mysqli_fetch_assoc($result);
-                    $kraj = $row['kraj'];
                     echo "<span class='bold'>Kraj: </span>" . $kraj;
                     ?>
                 </div>
                 <div class="oglas-kategorija">
                     <?php
-                    $sql = "SELECT * FROM kategorije WHERE id = '$kategorija_id'";
-                    $result = mysqli_query($link, $sql);
-                    $row = mysqli_fetch_assoc($result);
-                    $kategorija = $row['kategorija'];
-                    $kategorija_id = $row['id'];
                     echo "<span class='bold'>Kategorija: <a href=kategorija.php?id=$kategorija_id></span>" . $kategorija ."</a>";
                     ?>
                 </div>
                 <div class="oglas-avtor">
                     <?php
-                    $sql = "SELECT * FROM uporabniki WHERE id = '$uporanbik_id'";
-                    $result = mysqli_query($link, $sql);
-                    $row = mysqli_fetch_assoc($result);
-                    $avtor_ime = $row['ime'];
-                    $avtor_priimek = $row['priimek'];
                     echo "<span class='bold'>Avtor: </span>" . $avtor_ime . " " . $avtor_priimek;
                     ?>
                 </div>
@@ -115,6 +134,7 @@ $result2 = mysqli_query($link, $sql2);
                     ?>
                 </div>
             </div>
+        </div>
     </div>
 </body>
 </html>

@@ -1,22 +1,29 @@
-<!-- display all sporocila where sender_id = id -->
-
 <?php
 require_once 'baza.php';
 require_once 'cookie.php';
 
+// Assuming the session is already started
 if (!isset($_SESSION['ime'])) {
     header("Location: prijava.php");
     exit;
-}
-else{
+} else {
     $ime = $_SESSION['ime'];
     $priimek = $_SESSION['priimek'];
     $id = $_SESSION['id'];
 }
 
-$sql = "SELECT * FROM sporocila WHERE sender_id = '$id' OR receiver_id = '$id'";
-$result = mysqli_query($link, $sql);
+try {
+    // Establish a PDO connection using credentials from baza.php
+    $pdo = new PDO("mysql:host=$db_host;dbname=$db", $db_user, $db_password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+    // Fetch sporocila using prepared statement
+    $stmt = $pdo->prepare("SELECT * FROM sporocila WHERE sender_id = :id OR receiver_id = :id");
+    $stmt->execute(['id' => $id]);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
 ?>
 
 <!DOCTYPE html>
@@ -40,54 +47,63 @@ $result = mysqli_query($link, $sql);
             </div>
         </div>
     </nav>
-    <div class="content">        <?php
-        while ($row = mysqli_fetch_assoc($result)) {
+    
+    <div class="content">
+        <?php
+        foreach ($result as $row) {
             $sporocilo_id = $row['id'];
             $oglas_id = $row['oglas_id'];
-            $sql_oglas = "SELECT * FROM oglasi WHERE id = '$oglas_id'";
-            $result_oglas = mysqli_query($link, $sql_oglas);
-            $row_oglas = mysqli_fetch_assoc($result_oglas);
-            $naslov_oglasa = $row_oglas['naslov'];
+            $naslov_oglasa = "";
             $vsebina = $row['sporocilo'];
             $sender_id = $row['sender_id'];
-            $sql_sender = "SELECT * FROM uporabniki WHERE id = '$sender_id'";
-            $result_sender = mysqli_query($link, $sql_sender);
-            $row_sender = mysqli_fetch_assoc($result_sender);
-            $sender_ime = $row_sender['ime'];
-            $sender_priimek = $row_sender['priimek'];
-            $cas_posiljanja = $row['cas'];
-            // convert cas_posiljanja to how much time ago
-            $cas_posiljanja = strtotime($cas_posiljanja);
+            $receiver_id = $sender_id;
+            
+            // Fetch oglas info using prepared statement
+            $stmt_oglas = $pdo->prepare("SELECT * FROM oglasi WHERE id = :oglas_id");
+            $stmt_oglas->execute(['oglas_id' => $oglas_id]);
+            $row_oglas = $stmt_oglas->fetch(PDO::FETCH_ASSOC);
+            if ($row_oglas) {
+                $naslov_oglasa = $row_oglas['naslov'];
+            }
+
+            // Fetch sender info using prepared statement
+            $stmt_sender = $pdo->prepare("SELECT * FROM uporabniki WHERE id = :sender_id");
+            $stmt_sender->execute(['sender_id' => $sender_id]);
+            $row_sender = $stmt_sender->fetch(PDO::FETCH_ASSOC);
+            if ($row_sender) {
+                $sender_ime = $row_sender['ime'];
+                $sender_priimek = $row_sender['priimek'];
+            }
+
+            // Calculate time difference
+            $cas_posiljanja = strtotime($row['cas']);
             $cas_posiljanja = time() - $cas_posiljanja;
             $cas_posiljanja = round($cas_posiljanja / 60);
             if ($cas_posiljanja < 60) {
                 $cas_posiljanja = $cas_posiljanja . " minut";
-            }
-            else if ($cas_posiljanja < 1440) {
+            } else if ($cas_posiljanja < 1440) {
                 $cas_posiljanja = round($cas_posiljanja / 60);
                 $cas_posiljanja = $cas_posiljanja . " ur";
-            }
-            else {
+            } else {
                 $cas_posiljanja = round($cas_posiljanja / 1440);
                 $cas_posiljanja = $cas_posiljanja . " dni";
             }
-            $receiver_id = $sender_id;
         ?>
-        <a class="sporocila-a" href="pogovor.php?id=<?php echo $oglas_id; ?>&receiver_id=<?php echo $receiver_id; ?>">
-            <div class="sporocila">
-                <div class="bold">
-                    <span></span> <?php echo $naslov_oglasa; ?>
+            <a class="sporocila-a" href="pogovor.php?id=<?php echo $oglas_id; ?>&receiver_id=<?php echo $receiver_id; ?>">
+                <div class="sporocila">
+                    <div class="bold">
+                        <span></span> <?php echo $naslov_oglasa; ?>
+                    </div>
+                    <div class="ime">
+                        <span class="bold">Pošiljatelj:</span> <?php echo $sender_ime . " " . $sender_priimek; ?>
+                    </div>
+                    <div class="sporocilo-text">
+                        <span>Sporočilo:</span> <?php echo $vsebina; ?>
+                    </div>
+                    <div class="cas">
+                        <span class="bold">Poslano pred:</span> <?php echo $cas_posiljanja; ?>
+                    </div>
                 </div>
-                <div class="ime">
-                    <span class="bold">Pošiljatelj:</span> <?php echo $sender_ime . " " . $sender_priimek; ?>
-                </div>
-                <div class="sporocilo-text">
-                    <span>Sporočilo:</span> <?php echo $vsebina; ?>
-                </div>
-                <div class="cas">
-                    <span class="bold">Poslano pred:</span> <?php echo $cas_posiljanja; ?>
-                </div>
-            </div>
             </a>
         <?php
         }

@@ -1,31 +1,42 @@
 <?php
 require_once('baza.php');
+
 $i = $_POST['ime'];
 $pri = $_POST['priimek'];
 $e = $_POST['e-mail'];
 $p = $_POST['geslo'];
-// use password hash
+
+// Use password_hash
 $kp = password_hash($p, PASSWORD_DEFAULT);
 
-$prev = "SELECT * FROM uporabniki WHERE `email` = '$e';";
-$result = mysqli_query($link, $prev);
+try {
+    // Establish a database connection using credentials from baza.php
+    $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
-if (mysqli_num_rows($result) === 1)
-{
-    header("Refresh:0;url=registracija.php");
-    echo '<script>alert("Uporabnik s tem e-poštnim naslovom že obstaja.")</script>';
-}
-else
-{
-    $query = "INSERT INTO uporabniki (ime,priimek,email,geslo) VALUES('$i', '$pri', '$e','$kp');";
-    if(mysqli_query($link, $query))
-    {
-        header("Refresh:0;url=prijava.php");
+    // Check the connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
-    else
-    {
+
+    $prev = "SELECT * FROM uporabniki WHERE `email` = '$e';";
+    $result = $conn->query($prev);
+
+    if ($result->num_rows === 1) {
         header("Refresh:0;url=registracija.php");
-        echo '<script>alert("Registracija ni uspela.")</script>';
+        echo '<script>alert("Uporabnik s tem e-poštnim naslovom že obstaja.")</script>';
+    } else {
+        $query = "INSERT INTO uporabniki (ime, priimek, email, geslo) VALUES ('$i', '$pri', '$e', '$kp');";
+        if ($conn->query($query) === TRUE) {
+            header("Refresh:0;url=prijava.php");
+        } else {
+            header("Refresh:0;url=registracija.php");
+            echo '<script>alert("Registracija ni uspela.")</script>';
+        }
     }
+
+    // Close the database connection
+    $conn->close();
+} catch (Exception $e) {
+    die("Error: " . $e->getMessage());
 }
 ?>

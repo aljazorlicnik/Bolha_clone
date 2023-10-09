@@ -1,4 +1,3 @@
-<!-- insert into database -->
 <?php
 require_once 'baza.php';
 require_once 'cookie.php';
@@ -73,26 +72,28 @@ else{
     }
 }
 
+try {
+    $stmt = $pdo->prepare("INSERT INTO oglasi (naslov, opis, cena, kraj_id, kategorija_id, uporabnik_id) VALUES (:naslov, :opis, :cena, :kraj, :kategorija, :id)");
+    $stmt->bindParam(':naslov', $naslov);
+    $stmt->bindParam(':opis', $opis);
+    $stmt->bindParam(':cena', $cena);
+    $stmt->bindParam(':kraj', $kraj);
+    $stmt->bindParam(':kategorija', $kategorija);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
 
+    // Get the ID of the inserted record
+    $id_oglasa = $pdo->lastInsertId();
 
-$sql = "INSERT INTO oglasi (naslov, opis, cena, kraj_id, kategorija_id, uporabnik_id) VALUES ('$naslov', '$opis', '$cena', '$kraj', '$kategorija', '$id')";
-$result = mysqli_query($link, $sql);
+    // Insert data into the 'slike' table
+    $stmt = $pdo->prepare("INSERT INTO slike (slika, oglas_id) VALUES (:target_file, :id_oglasa)");
+    $stmt->bindParam(':target_file', $target_file);
+    $stmt->bindParam(':id_oglasa', $id_oglasa);
+    $stmt->execute();
 
-// insert slika into database
-$sql = "SELECT * FROM oglasi WHERE naslov = '$naslov'";
-$result = mysqli_query($link, $sql);
-$row = mysqli_fetch_assoc($result);
-$id_oglasa = $row['id'];
-$sql = "INSERT INTO slike (slika, oglas_id) VALUES ('$target_file', '$id_oglasa')";
-$result = mysqli_query($link, $sql);
-
-if($result){
     header("Location: oglasi.php");
     exit;
+} catch (PDOException $e) {
+    echo "Napaka pri dodajanju oglasa: " . $e->getMessage();
 }
-else{
-    echo "Napaka pri dodajanju oglasa.";
-}
-
 ?>
-

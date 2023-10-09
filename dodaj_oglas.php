@@ -1,18 +1,24 @@
-<!-- check if user is logged in -->
 <?php
 require_once 'baza.php';
 require_once 'cookie.php';
 
+// Assuming the session is already started
 if (!isset($_SESSION['ime'])) {
     header("Location: prijava.php");
     exit;
-}
-else{
+} else {
     $ime = $_SESSION['ime'];
     $priimek = $_SESSION['priimek'];
     $id = $_SESSION['id'];
 }
 
+try {
+    // Establish a PDO connection using credentials from baza.php
+    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die("Error: " . $e->getMessage());
+}
 ?>
 
 <!-- HTML -->
@@ -40,10 +46,13 @@ else{
     <div class="content">
         <!-- form: dodaj oglas naslov, opis, cena, select kraj, select kategorija-->
         <?php
-            $sql = "SELECT * FROM kraji";
-            $result = mysqli_query($link, $sql);
-            $sql2 = "SELECT * FROM kategorije";
-            $result2 = mysqli_query($link, $sql2);
+            try {
+                // Fetch kraji and kategorije for the dropdowns
+                $stmt = $pdo->query("SELECT * FROM kraji");
+                $stmt2 = $pdo->query("SELECT * FROM kategorije");
+            } catch (PDOException $e) {
+                die("Error: " . $e->getMessage());
+            }
         ?>
         <form class="dodaj-form" action="dodaj_oglas_in.php" method="post" enctype="multipart/form-data">
             <div class="input">
@@ -62,7 +71,7 @@ else{
                 <select name="kraj" required>
                     <option value="" disabled selected>Izberi kraj</option>
                     <?php
-                        while($row = mysqli_fetch_assoc($result)){
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             $id_kraja = $row['id'];
                             $ime_kraja = $row['kraj'];
                             echo "<option value='$id_kraja'>$ime_kraja</option>";
@@ -74,7 +83,7 @@ else{
                 <select name="kategorija" required>
                     <option value="" disabled selected>Izberi kategorijo</option>
                     <?php
-                        while($row = mysqli_fetch_assoc($result2)){
+                        while ($row = $stmt2->fetch(PDO::FETCH_ASSOC)) {
                             $id_kategorije = $row['id'];
                             $ime_kategorije = $row['kategorija'];
                             echo "<option value='$id_kategorije'>$ime_kategorije</option>";
@@ -92,4 +101,3 @@ else{
     </div>
 </body>
 </html>
-

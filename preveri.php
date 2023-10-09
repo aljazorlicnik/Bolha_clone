@@ -4,27 +4,28 @@ require_once 'cookie.php';
 
 $e = $_POST['email'];
 $p = $_POST['geslo'];
-$kp = password_hash($p, PASSWORD_DEFAULT);
 
-$query = "SELECT * FROM uporabniki WHERE `email` = '$e';";
-$result = mysqli_query($link, $query);
-$row = mysqli_fetch_array($result);
-$hash = $row['geslo'];
+try {
+    // Use the database connection variables from baza.php
+    $pdo = new PDO("mysql:host=localhost;dbname=$db", $user, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-if (password_verify($p, $hash))
-{
-    $query_ime = "SELECT * FROM uporabniki WHERE email='$e';";
-    $result_ime = mysqli_query($link, $query_ime);
-    $row_ime = mysqli_fetch_array($result_ime);
-    $_SESSION['ime'] = $row_ime['ime'];
-    $_SESSION['priimek'] = $row_ime['priimek'];
-    $_SESSION['id'] = $row_ime['id'];
-    header("Refresh:0;url=index.php");
+    // Use prepared statements to prevent SQL injection
+    $stmt = $pdo->prepare("SELECT * FROM uporabniki WHERE email = :email");
+    $stmt->bindParam(':email', $e, PDO::PARAM_STR);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row && password_verify($p, $row['geslo'])) {
+        $_SESSION['ime'] = $row['ime'];
+        $_SESSION['priimek'] = $row['priimek'];
+        $_SESSION['id'] = $row['id'];
+        header("Refresh:0;url=index.php");
+    } else {
+        echo '<script>alert("Napačen email in/ali geslo")</script>';
+        header("Refresh:0;url=prijava.php");
+    }
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
 }
-else {
-    echo '<script>alert("Napačen email in/ali geslo")</script>';
-    header("Refresh:0;url=prijava.php");
-}
-
-
 ?>

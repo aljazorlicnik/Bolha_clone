@@ -20,6 +20,10 @@ try {
         $_SESSION['ime'] = $row['ime'];
         $_SESSION['priimek'] = $row['priimek'];
         $_SESSION['id'] = $row['id'];
+        // if admin == 1, set session variable
+        if ($row['admin'] == 1) {
+            $_SESSION['admin'] = 1;
+        }
         header("Refresh:0;url=index.php");
     } else {
         echo '<script>alert("Napačen email in/ali geslo")</script>';

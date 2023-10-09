@@ -14,7 +14,7 @@ $google_client->setClientId('568109484828-nfildh5cd6p21kn75bmkcdkc5mln257j.apps.
 
 $google_client->setClientSecret('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');
 
-$google_client->SetRedirectUri('http://bolha.aljazorli.eu/googlelogin.php');
+$google_client->SetRedirectUri('http://bolha.aljazorli.eu/google_login.php');
 $google_client->addScope('email');
 $google_client->addScope('profile');
 

@@ -18,7 +18,7 @@
   <div class = "container">
     <h1>Google povezava</h1>
     <p>Poveži svoj trenutni račun, z svojim google računom za lažjo prijavo:</p>
- <form action="googlelink.php" method="post">
+ <form action="google_link.php" method="post">
  <label for="email">Mail:</label>
   <input type="text" id="email" name="email" required readonly value = "<?php echo $_SESSION['email'] ?>">
   <label for="geslo">Geslo:</label>

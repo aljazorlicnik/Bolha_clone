@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once 'cookie.php';
 if(isset($_SESSION['id'])){
     header('Location: index.php');
     exit();
@@ -35,7 +35,7 @@ if (isset($_GET["code"])) {
 
         
         $sql = "SELECT * FROM uporabniki WHERE email = :mail";
-        $stmt = $conn->prepare($sql);
+        $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':mail', $mail, PDO::PARAM_STR);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);

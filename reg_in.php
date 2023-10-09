@@ -1,5 +1,6 @@
 <?php
 require_once('baza.php');
+require_once('cookie.php');
 
 $i = $_POST['ime'];
 $pri = $_POST['priimek'];
@@ -24,7 +25,12 @@ try {
     if ($result->num_rows === 1) {
         header("Refresh:0;url=registracija.php");
         echo '<script>alert("Uporabnik s tem e-poštnim naslovom že obstaja.")</script>';
-    } else {
+    }
+    else {
+        if(isset($_SESSION['google_id'])
+           {
+               $query = "INSERT INTO uporabniki (ime, priimek, email, geslo, google_id) VALUES ('$i', '$pri', '$e', '$kp', '$_SESSION['google_id']');";
+           }
         $query = "INSERT INTO uporabniki (ime, priimek, email, geslo) VALUES ('$i', '$pri', '$e', '$kp');";
         if ($conn->query($query) === TRUE) {
             header("Refresh:0;url=prijava.php");

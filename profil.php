@@ -73,7 +73,7 @@ try {
                 <label for="geslo2">Ponovi geslo:</label><br>
                 <input type="password" name="geslo2" id="geslo2"><br>
                 <button class="btn" type="submit">Shrani</button>
-            </form>
+            </form><br><br>
             <!-- if admin==1 add an admin button -->
             <?php
             if ($_SESSION['admin'] == 1) {

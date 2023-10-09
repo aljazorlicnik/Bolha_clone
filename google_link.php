@@ -16,7 +16,7 @@ if ($result !== false) {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$_SESSION['google_id'], $result['id']]);
 
-        $_SESSION["id"] = $result['id'];
+        $_SESSION['id'] = $result['id'];
         header('Location: index.php');
     } else {
         header('Location: google_addmail.php');

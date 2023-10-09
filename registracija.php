@@ -8,6 +8,22 @@
     <title>Registracija</title>
 </head>
 <body>
+<?php
+  include_once 'libraries/vendor/autoload.php';
+  session_start();
+
+  $google_client = new Google_Client();
+
+$google_client->setClientId('568109484828-nfildh5cd6p21kn75bmkcdkc5mln257j.apps.googleusercontent.com');
+
+$google_client->setClientSecret('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');
+
+$google_client->SetRedirectUri('http://bolha.aljazorli.eu/googlelogin.php');
+
+$google_client->addScope('email');
+
+$google_client->addScope('profile');
+  ?>
     <div id="bg"></div>
         <form form action="reg_in.php" method="post">
             <div class="input">
@@ -31,6 +47,7 @@
                 <button class="btn" type="submit">Registriraj se</button>
             </div>
             <div class="input">
+            <p>Lahko se tudi registriraš z Google računom: <a href = "<?php echo $google_client->createAuthUrl()?>">Registriraj se z Google računom</a>
             <a class="prijava" href="prijava.php">Ste že registrirani? Prijavite se.</a>
             </div>
         </form>

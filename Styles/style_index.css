@@ -1,14 +1,10 @@
-/* style nav */
-body{
+body {
     background-color: #8800ff;
-}
-
-*{
     font-family: sans-serif;
     object-fit: cover;
 }
 
-img{
+img {
     border-radius: 5px;
 }
 
@@ -33,7 +29,7 @@ img{
     clear: right;
 }
 
-.nav a{
+.nav a {
     float: left;
     color: #fff;
     text-decoration: none;
@@ -44,7 +40,21 @@ img{
     margin-left: 20px;
 }
 
-.search input{
+/* Mobile-specific styles */
+@media (max-width: 768px) {
+    .nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav input,
+    .nav button {
+        float: none;
+        margin-top: 10px;
+    }
+}
+
+.search input {
     width: 85%;
     margin-top: 10px;
     margin-left: 20px;

@@ -11,7 +11,7 @@ $kp = password_hash($p, PASSWORD_DEFAULT);
 
 try {
     // Establish a database connection using credentials from baza.php
-    $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
+    $conn = new mysqli($host, $user, $password, $db);
 
     // Check the connection
     if ($conn->connect_error) {

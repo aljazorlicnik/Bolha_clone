@@ -22,7 +22,7 @@ if (isset($_GET['receiver_id'])) {
 } else {
     try {
         // Establish a PDO connection (use your own connection details)
-        $pdo = new PDO("mysql:host=localhost;dbname=bolha", "root", "");
+        $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Fetch the receiver_id based on oglas_id using a prepared statement

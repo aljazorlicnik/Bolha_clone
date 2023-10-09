@@ -14,7 +14,7 @@ if (!isset($_SESSION['ime'])) {
 
 try {
     // Establish a PDO connection (use your own connection details)
-    $pdo = new PDO("mysql:host=localhost;dbname=bolha", "root", "");
+    $pdo = new PDO("mysql:host=localhost;dbname='$db'", "$user", "$password");
 
     // Set PDO to throw exceptions on error
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

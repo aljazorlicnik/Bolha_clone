@@ -1,15 +1,15 @@
 <?php
 //server
-// $host="localhost";
-// $user="orlieu_root";
-// $password="7#5pg9}6)nl?";
-// $db="orlieu_bolha";
+$host="localhost";
+$user="orlieu_root";
+$password="7#5pg9}6)nl?";
+$db="orlieu_bolha";
 
 // local
-$host = "localhost";
-$user = "root";
-$password = "";
-$db = "bolha";
+// $host = "localhost";
+// $user = "root";
+// $password = "";
+// $db = "bolha";
 
 try {
   $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $password);

@@ -20,7 +20,7 @@
   <div class = "container">
     <h1>Registracija</h1>
     <p>Potrebno je še izpolniti dodatna polja:</p>
- <form action="register.php" method="post">
+ <form action="reg_in.php" method="post">
   <label for="ime">Ime:</label>
   <input type="text" id="ime" name="ime" value = "<?php echo $_SESSION['ime'] ?>" required>  
   <label for="priimek">Priimek:</label>

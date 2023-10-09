@@ -56,16 +56,16 @@ img {
 
 .search input {
     width: 85%;
-    margin-top: 10px;
-    margin-left: 20px;
-    padding: 10px;
+    margin-top: 1em;
+    margin-left: 2%;
+    padding: 1em;
     border-radius: 3px;
     border: 1px solid #8800ff;
 }
 
 .search .btn{
-    margin-left: 5px;
-    padding: 10px;
+    margin-left: 1%;
+    padding: 1em;
     border-radius: 3px;
     border: 1px solid #8800ff;
     background-color: #ffffff;

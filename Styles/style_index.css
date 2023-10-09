@@ -307,6 +307,11 @@ img {
     cursor: pointer;
 }
 
+/* center .p */
+.p {
+    text-align: center;
+}
+
 .sporocilo-content{
     display: flex;
     flex-direction: column;

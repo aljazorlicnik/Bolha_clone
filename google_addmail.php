@@ -22,7 +22,7 @@
  <label for="email">Mail:</label>
   <input type="text" id="email" name="email" required readonly value = "<?php echo $_SESSION['email'] ?>">
   <label for="geslo">Geslo:</label>
-  <input type="password" id="geslo" name="geslo" required>  
+  <input type="password" id="geslo" name="geslo" required><br><br>
   <input type="submit" value="Pošlji">
 </form>
 <p>Nočeš povezati računa?<a href = "prijava.php"> Pojdi na prijavo</a>

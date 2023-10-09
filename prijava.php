@@ -40,7 +40,7 @@ $google_client->addScope('profile');
                 <button class="btn" type="submit">Prijavi se</button>
             </div>
             <div class="form-field">
-            <p>Lahko se tudi registriraš z Google računom: <a href = "<?php echo $google_client->createAuthUrl()?>">Registriraj se z Google računom</a>
+            <p>Lahko se tudi registriraš z Google računom: <a href = "<?php echo $google_client->createAuthUrl()?>">Registriraj se z Google računom</a><br><br>
             <a class="prijava" href="registracija.php">Še niste registrirani? Registrirajte se.</a>
         </div>
         </form>

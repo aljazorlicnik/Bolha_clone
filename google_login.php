@@ -54,9 +54,9 @@ if (isset($_GET["code"])) {
                 header("Location: google_addmail.php");
             }
                 else{
-                    $_SESSION['ime'] = $row['ime'];
-                    $_SESSION['priimek'] = $row['priimek'];
-                    $_SESSION['id'] = $row['id'];
+                    $_SESSION['ime'] = $result['ime'];
+                    $_SESSION['priimek'] = $result['priimek'];
+                    $_SESSION['id'] = $result['id'];
                     header("Refresh:0;url=index.php");
                 }
         }

@@ -75,6 +75,11 @@ try {
                 <button class="btn" type="submit">Shrani</button>
             </form>
             <!-- if admin==1 add an admin button -->
+            <?php
+            if ($_SESSION['admin'] == 1) {
+                echo "<a href='admin.php'><button class='btn'>Admin</button></a>";
+            }
+            ?>
         </div>
     </div>
 </body>

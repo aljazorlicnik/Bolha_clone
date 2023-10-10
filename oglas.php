@@ -136,7 +136,7 @@ try {
                 <!-- if admin == 1, izbrisi button -->
                 <?php
                 if ($_SESSION['admin'] == 1) {
-                    echo "<a href='izbrisi_oglas.php?id=$oglas_id'><div class='izbrisi-btn' width='25%'>Izbriši oglas</div></a>";
+                    echo "<a href='izbrisi_oglas.php?id=$oglas_id'><div class='izbrisi-btn' style='width: 25%;'>Izbriši oglas</div></a>";
                 }
                 ?>
             </div>

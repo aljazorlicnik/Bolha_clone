@@ -1,4 +1,4 @@
-# Muha Web Store
+# Muha
 
 Welcome to Muha, a web store for selling used items. Muha is a web application built using HTML, PHP, and CSS. This README.md file provides an overview of the project, its features, and instructions for getting started.
 

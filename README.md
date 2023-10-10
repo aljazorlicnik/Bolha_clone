@@ -48,4 +48,39 @@ To run Muha on your web server, you'll need the following:
 To install Muha, follow these steps:
 
 1. Clone the Muha repository to your web server directory:
+git clone https://github.com/your-username/muha-webstore.git
+
+2. Create a MySQL database and import the provided SQL schema (`muha.sql`) to set up the database structure.
+
+3. Update the database configuration in the `config.php` file with your database credentials:
+
+```php
+$host = "localhost"; // Your database host
+$name = "bolha";   // Your database name
+$user = "root";  // Your database username
+$password = "";  // Your database password
+
+Configure any other settings in the config.php file as needed.
+
+Ensure that your web server is properly configured to serve PHP files.
+
+Open Muha in your web browser and start using it:
+https://bolha.aljazorli.eu/index.php
+
+Usage
+Creating an Account: Users can sign up for an account by clicking the "Sign Up" button on the homepage. Fill in the required information to create your account.
+
+Listing Items: Sellers can list items for sale by logging in, going to their profile, and clicking "Create Listing."
+
+Searching and Buying: Buyers can browse items by category or use the search bar to find specific items. Click on an item to view its details and make a purchase.
+
+Messaging: Buyers and sellers can communicate through the messaging system to discuss item details, negotiate prices, and arrange transactions.
+
+Leaving Reviews: After a successful transaction, both parties can leave reviews and ratings to share their experiences.
+
+Contributing
+We welcome contributions to Muha! If you'd like to contribute to the project, please fork the repository, make your changes, and submit a pull request. Be sure to follow the project's coding guidelines and provide clear documentation for any new features or changes.
+
+License
+Muha is released under the MIT License. You are free to use, modify, and distribute this software as long as you include the original copyright notice and disclaimers. Please refer to the LICENSE file for more details.
 

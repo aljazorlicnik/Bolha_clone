@@ -48,7 +48,7 @@ $google_client->addScope('profile');
             </div>
             <div class="input">
             <p>Lahko se tudi registriraš z Google računom: <a href = "<?php echo $google_client->createAuthUrl()?>">Registriraj se z Google računom</a>
-            <a class="prijava" href="prijava.php">Ste že registrirani? Prijavite se.</a>
+            <br><a class="prijava" href="prijava.php">Ste že registrirani? Prijavite se.</a>
             </div>
         </form>
     </div>

@@ -49,7 +49,7 @@ To install Muha, follow these steps:
 
 1. Clone the Muha repository to your web server directory:
 
-git clone https://github.com/your-username/muha-webstore.git
+git clone https://github.com/aljazorli/bolha-clone.git
 
 arduino
 Copy code
@@ -59,11 +59,11 @@ Copy code
 3. Update the database configuration in the `config.php` file with your database credentials:
 
 ```php
-$dbHost = "localhost"; // Your database host
-$dbName = "muha_db";   // Your database name
-$dbUser = "username";  // Your database username
-$dbPass = "password";  // Your database password
-Configure any other settings in the config.php file as needed.
+$host = "localhost"; // Your database host
+$db = "bolha";   // Your database name
+$user = "root";  // Your database username
+$password = "";  // Your database password
+```
 
 Ensure that your web server is properly configured to serve PHP files.
 
@@ -71,7 +71,7 @@ Open Muha in your web browser and start using it:
 
 arduino
 Copy code
-http://your-domain.com/muha-webstore/
+[http://your-domain.com/muha-webstore/](https://bolha.aljazorli.eu/index.php)
 Usage
 Creating an Account: Users can sign up for an account by clicking the "Sign Up" button on the homepage. Fill in the required information to create your account.
 

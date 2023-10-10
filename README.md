@@ -54,9 +54,7 @@ git clone [https://github.com/aljazorli/bolha-clone.git](https://github.com/alja
 arduino
 Copy code
 
-2. Create a MySQL database and import the provided SQL schema (`muha.sql`) to set up the database structure.
-
-3. Update the database configuration in the `config.php` file with your database credentials:
+2. Create a MySQL database and import the provided SQL schema (`script.sql`) to set up the database structure.
 
 ```php
 $host = "localhost"; // Your database host
@@ -69,7 +67,7 @@ Ensure that your web server is properly configured to serve PHP files.
 
 Open Muha in your web browser and start using it:
 
-Copy code
+Live demo:
 [https://bolha.aljazorli.eu/index.php]
 
 Usage

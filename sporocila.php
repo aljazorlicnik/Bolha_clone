@@ -107,6 +107,15 @@ try {
             </a>
         <?php
         }
+        if (count($result) == 0) {
+        ?>
+            <div class="sporocila">
+                <div class="bold">
+                    <span></span> Ni sporocil
+                </div>
+            </div>  
+        <?php
+        }
         ?>
     </div>
 </body>

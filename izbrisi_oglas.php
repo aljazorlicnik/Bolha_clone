@@ -23,6 +23,11 @@ try {
 $id_oglasa = $_GET['id'];
 
 try {
+    // delete from sporocila
+    $stmt = $pdo->prepare("DELETE FROM sporocila WHERE oglas_id = :id_oglasa");
+    $stmt->bindParam(':id_oglasa', $id_oglasa, PDO::PARAM_INT);
+    $stmt->execute();
+
     // Delete from 'slike' table where oglas_id matches
     $stmt = $pdo->prepare("DELETE FROM slike WHERE oglas_id = :id_oglasa");
     $stmt->bindParam(':id_oglasa', $id_oglasa, PDO::PARAM_INT);

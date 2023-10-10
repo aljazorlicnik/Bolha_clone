@@ -86,6 +86,7 @@ try {
 
     // Add a button to create a new oglas
     echo '
+    </div>
     <div class="dodaj">
         <a href="dodaj_oglas.php">Dodaj oglas</a>
     </div>
@@ -93,7 +94,6 @@ try {
 
     // Close the HTML
     echo '
-    </div>
     </body>
     </html>
     ';

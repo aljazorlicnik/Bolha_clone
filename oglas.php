@@ -133,6 +133,12 @@ try {
                     echo "<a href='pogovor.php?id=$oglas_id'><div class='pogovor-btn'>Začni pogovor</div></a>";
                     ?>
                 </div>
+                <!-- if admin == 1, izbrisi button -->
+                <?php
+                if ($_SESSION['admin'] == 1) {
+                    echo "<a href='izbrisi_oglas.php?id=$oglas_id'><div class='izbrisi-btn'>Izbriši oglas</div></a>";
+                }
+                ?>
             </div>
         </div>
     </div>

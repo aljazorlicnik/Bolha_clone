@@ -69,9 +69,8 @@ Ensure that your web server is properly configured to serve PHP files.
 
 Open Muha in your web browser and start using it:
 
-arduino
 Copy code
-[http://your-domain.com/muha-webstore/](https://bolha.aljazorli.eu/index.php)
+[https://bolha.aljazorli.eu/index.php]
 Usage
 Creating an Account: Users can sign up for an account by clicking the "Sign Up" button on the homepage. Fill in the required information to create your account.
 

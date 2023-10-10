@@ -49,7 +49,7 @@ To install Muha, follow these steps:
 
 1. Clone the Muha repository to your web server directory:
 
-git clone https://github.com/aljazorli/bolha-clone.git
+git clone [https://github.com/aljazorli/bolha-clone.git](https://github.com/aljazorlicnik/Bolha_clone.git)
 
 arduino
 Copy code
@@ -71,6 +71,7 @@ Open Muha in your web browser and start using it:
 
 Copy code
 [https://bolha.aljazorli.eu/index.php]
+
 Usage
 Creating an Account: Users can sign up for an account by clicking the "Sign Up" button on the homepage. Fill in the required information to create your account.
 
